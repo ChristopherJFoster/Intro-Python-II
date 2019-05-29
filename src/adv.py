@@ -60,20 +60,56 @@ print(newline, end='')
 print('Welcome to the game, player!', newline)
 # playername = input(
 #     'Please enter your name, real or imagined: ')
-# player = Player(playername)
-player = Player('Gerold')
+# player = Player(playername, room['outside'])
+player = Player('Gerold', room['outside'])
 print(newline, end='')
 print(f'Well, {player.name}, why don\'t we get started?')
 
+# gameplay functions
+
+
+# def travel(direction):
+#     try:
+#         player.current_room = [f'current_room.{direction}_to']
+#     except AttributeError:
+#         print(newline, end='')
+#         print(f'There is no path in that direction, {player.name}.')
+
+
 # gameplay loop
 while True:
+    current_room = player.current_room
     print(newline, end='')
-    print(f'{room[player.current_room].name}')
-    print(f'{room[player.current_room].desc}')
+    print(f'{current_room.name}')
+    print(f'{current_room.desc}')
     print(newline, end='')
     action = input('Action: ')
     if action == 'q':
         print(newline, end='')
-        print('You hear a faint voice, as if from the bottom of a well: "Thank you for playing..."')
+        print('From the bottom of a heretofore unnoticed well, you hear: "Thank you for playing..."')
         print(newline, end='')
         sys.exit()
+    if action == 'n':
+        try:
+            player.current_room = current_room.n_to
+        except AttributeError:
+            print(newline, end='')
+            print(f'There is no path in that direction, {player.name}.')
+    if action == 'e':
+        try:
+            player.current_room = current_room.e_to
+        except AttributeError:
+            print(newline, end='')
+            print(f'There is no path in that direction, {player.name}.')
+    if action == 'w':
+        try:
+            player.current_room = current_room.w_to
+        except AttributeError:
+            print(newline, end='')
+            print(f'There is no path in that direction, {player.name}.')
+    if action == 's':
+        try:
+            player.current_room = current_room.s_to
+        except AttributeError:
+            print(newline, end='')
+            print(f'There is no path in that direction, {player.name}.')
