@@ -2,27 +2,33 @@ import sys
 
 from player import Player
 from room import Room
-
+from item import Item
 
 # Declare all the rooms
 
+item = {
+    'rope': Item('rope', 'A dusty old rope, probably about fifty units long'),
+    'lamp': Item('lamp', 'A rusty—but apparently functional—lamp with less fuel than you\'d like'),
+    'knife': Item('knife', '')
+}
+
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", [item['rope'], item['knife']]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", [item['lamp']]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", []),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+to north. The smell of gold permeates the air.""", []),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", []),
 }
 
 
@@ -82,11 +88,17 @@ while True:
     print(f'{current_room.name}')
     print(f'{current_room.desc}')
     print(newline, end='')
+    print('In this location, you see:')
+    for i in range(len(current_room.items)):
+        print(f'{current_room.items[i].name}')
+    print(newline, end='')
     action = input('Action: ')
-    if action == 'q':
+    if action in ('q', 'quit'):
         print(newline, end='')
         print('From the bottom of a heretofore unnoticed well, you hear: "Thank you for playing..."')
         print(newline, end='')
         sys.exit()
-    if action in ('n', 's', 'e', 'w'):
+    elif action in ('n', 's', 'e', 'w'):
         travel(action)
+    else:
+        print('I don\'t understand what you\'re trying to do. Try n, s, e, or w...')
