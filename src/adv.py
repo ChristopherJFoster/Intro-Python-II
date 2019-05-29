@@ -1,5 +1,8 @@
+import sys
+
 from player import Player
 from room import Room
+
 
 # Declare all the rooms
 
@@ -51,13 +54,26 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
+# initialize player
 newline = '\n'
 print(newline, end='')
 print('Welcome to the game, player!', newline)
-playername = input(
-    'Please enter your name, real or imagined: ')
-
-player = Player(playername)
-
+# playername = input(
+#     'Please enter your name, real or imagined: ')
+# player = Player(playername)
+player = Player('Gerold')
 print(newline, end='')
-print(f'Well, {player.name}, why don\'t we get started?', newline)
+print(f'Well, {player.name}, why don\'t we get started?')
+
+# gameplay loop
+while True:
+    print(newline, end='')
+    print(f'{room[player.current_room].name}')
+    print(f'{room[player.current_room].desc}')
+    print(newline, end='')
+    action = input('Action: ')
+    if action == 'q':
+        print(newline, end='')
+        print('You hear a faint voice, as if from the bottom of a well: "Thank you for playing..."')
+        print(newline, end='')
+        sys.exit()
