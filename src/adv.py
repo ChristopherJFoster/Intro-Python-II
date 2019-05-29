@@ -1,3 +1,4 @@
+from player import Player
 from room import Room
 
 # Declare all the rooms
@@ -49,3 +50,14 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+newline = '\n'
+print(newline, end='')
+print('Welcome to the game, player!', newline)
+playername = input(
+    'Please enter your name, real or imagined: ')
+
+player = Player(playername)
+
+print(newline, end='')
+print(f'Well, {player.name}, why don\'t we get started?', newline)
