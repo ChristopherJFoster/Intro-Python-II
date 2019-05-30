@@ -44,7 +44,6 @@ class Player:
             print(f'There is no path in that direction, {self.name}.')
 
     def takeItem(self, item):
-        self.current_room.items.remove(item)
         self.items.append(item)
 
     def dropItem(self, item):

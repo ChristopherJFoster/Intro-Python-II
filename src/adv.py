@@ -110,7 +110,7 @@ while True:
             print(newline, end='')
     elif len(action) == 2:
         if action[0] in ('get', 'take'):
-            player.takeItem(action[1])
+            player.takeItem(player.current_room.remove_item(action[1]))
         elif action[0] in ('drop', 'leave'):
             player.dropItem(action[1])
         elif action[0] in ('examine', 'look'):
