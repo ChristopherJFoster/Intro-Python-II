@@ -6,8 +6,8 @@ from item import Item
 
 # Declare all the items
 
-rope = Item('rope', 'A dusty old rope, probably about fifty units long')
-lamp = Item('lamp', 'A rusty lamp with less fuel than you\'d like. The lamp is functional, however, since it is currently illuminating the room.')
+rope = Item('rope', 'You see a dusty old rope, probably about fifty units long.')
+lamp = Item('lamp', 'You see a rusty lamp with less fuel than you\'d like. The lamp is functional, however, since it is currently illuminating the room.')
 knife = Item(
     'knife', '"What is a knife sharpener?" you imagine the previous\nowner of this knife wondering.')
 
@@ -96,10 +96,12 @@ while True:
             if len(player.items) == 0:
                 print(
                     'You have nothing but the potato-sack trousers and soiled tunic \nyou apparently think fit to wear in public.')
+                print(newline, end='')
             else:
                 print('In addition to your shoddy clothes, you have:')
                 for i in range(len(player.items)):
                     print(f'{player.items[i].name}')
+                print(newline, end='')
         elif action[0] in ('get', 'take', 'drop', 'leave'):
             print(f'{action[0].capitalize()} what, exactly?')
         elif action[0] in ('examine', 'look'):
@@ -110,9 +112,9 @@ while True:
             print(newline, end='')
     elif len(action) == 2:
         if action[0] in ('get', 'take'):
-            player.takeItem(player.current_room.remove_item(action[1]))
+            player.addItem(player.current_room.removeItem(action[1]))
         elif action[0] in ('drop', 'leave'):
-            player.dropItem(action[1])
+            player.current_room.addItem(player.removeItem(action[1]))
         elif action[0] in ('examine', 'look'):
             player.look(action[1])
         else:

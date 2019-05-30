@@ -43,9 +43,18 @@ class Player:
             print(newline, end='')
             print(f'There is no path in that direction, {self.name}.')
 
-    def takeItem(self, item):
+    def addItem(self, item):
         self.items.append(item)
+        print(newline, end='')
+        print(f'You take the {item.name}.')
+        print(newline, end='')
 
-    def dropItem(self, item):
-        self.current_room.items.append(item)
-        self.items.remove(item)
+    def removeItem(self, item_name):
+        for item in self.items:
+            if item.name == item_name:
+                self.items.remove(item)
+                return item
+        print(newline, end='')
+        print(f'You don\'t have a {item_name} to drop!')
+        print(newline, end='')
+        return None
