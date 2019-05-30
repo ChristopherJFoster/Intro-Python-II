@@ -10,29 +10,41 @@ class Player:
         self.current_room = current_room
         self.items = []
 
-    def look(self, item='room'):
+    def look(self, target='room'):
         visible_items = self.items + self.current_room.items
         found = False
-        for i in visible_items:
-            if i.name == item:
+        item_lit = False
+        for item in visible_items:
+            if item.light == True:
+                item_lit = True
+                break
+
+        if item_lit == True or self.current_room.lit == True:
+            for i in visible_items:
+                if i.name == target:
+                    print(newline, end='')
+                    print(i.desc)
+                    print(newline, end='')
+                    found = True
+                    break
+            if target == 'room':
                 print(newline, end='')
-                print(i.desc)
+                print(f'{self.current_room.name}')
+                print(f'{self.current_room.desc}')
+                print(newline, end='')
+                print('In this location, you see:')
+                for i in range(len(self.current_room.items)):
+                    print(f'{self.current_room.items[i].name}')
                 print(newline, end='')
                 found = True
-                break
-        if item == 'room':
+            if found == False:
+                print(newline, end='')
+                print(f'There doesn\'t seem to be any {item} here.')
+                print(newline, end='')
+        else:
             print(newline, end='')
-            print(f'{self.current_room.name}')
-            print(f'{self.current_room.desc}')
-            print(newline, end='')
-            print('In this location, you see:')
-            for i in range(len(self.current_room.items)):
-                print(f'{self.current_room.items[i].name}')
-            print(newline, end='')
-            found = True
-        if found == False:
-            print(newline, end='')
-            print(f'There doesn\'t seem to be any {item} here.')
+            print(
+                'Egad! It\'s pitch black in here!\nYou might consider going back the way you came.')
             print(newline, end='')
 
     def travel(self, direction):
@@ -42,6 +54,7 @@ class Player:
         except AttributeError:
             print(newline, end='')
             print(f'There is no path in that direction, {self.name}.')
+            print(newline, end='')
 
     def addItem(self, item):
         if item != None:

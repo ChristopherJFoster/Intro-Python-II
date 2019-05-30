@@ -5,10 +5,11 @@ newline = '\n'
 
 
 class Room:
-    def __init__(self, name, desc, items):
+    def __init__(self, name, desc, items, lit):
         self.name = name
         self.desc = desc
         self.items = items
+        self.lit = lit
 
     def addItem(self, item):
         if item != None:
