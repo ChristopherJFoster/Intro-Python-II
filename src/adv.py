@@ -8,8 +8,8 @@ from item import Item
 
 item = {
     'rope': Item('rope', 'A dusty old rope, probably about fifty units long'),
-    'lamp': Item('lamp', 'A rusty—but apparently functional—lamp with less fuel than you\'d like'),
-    'knife': Item('knife', '')
+    'lamp': Item('lamp', 'A rusty lamp with less fuel than you\'d like. The lamp is functional, however, since it is currently illuminating the room.'),
+    'knife': Item('knife', '"What is a knife sharpener?" you imagine the previus owner of this knife wondering.')
 }
 
 room = {
@@ -43,6 +43,10 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+# DRY variables
+newline = '\n'
+suggestion = 'Slow down, pardner. Try n, s, e, or w, or simple commands \nlike \'examine filth\', \'take treasure\', or \'drop scorpion\'.'
+
 #
 # Main
 #
@@ -61,7 +65,7 @@ room['treasure'].s_to = room['narrow']
 # If the user enters "q", quit the game.
 
 # initialize player
-newline = '\n'
+
 print(newline, end='')
 print('Welcome to the game, player!', newline)
 playername = input(
@@ -81,8 +85,24 @@ def travel(direction):
         print(f'There is no path in that direction, {player.name}.')
 
 
+def take(item):
+    if item == 'treasure':
+        print('There\'s no treasure here. You didn\'t really think it would be that easy, did you?')
+    else:
+        print('take item goes here')
+
+
+def drop(item):
+    print('drop item goes here')
+
+
+def look(item):
+    print('look item goes here')
+
+
 # gameplay loop
 while True:
+    # room description
     current_room = player.current_room
     print(newline, end='')
     print(f'{current_room.name}')
@@ -92,13 +112,39 @@ while True:
     for i in range(len(current_room.items)):
         print(f'{current_room.items[i].name}')
     print(newline, end='')
-    action = input('Action: ')
-    if action in ('q', 'quit'):
-        print(newline, end='')
-        print('From the bottom of a heretofore unnoticed well, you hear: "Thank you for playing..."')
-        print(newline, end='')
-        sys.exit()
-    elif action in ('n', 's', 'e', 'w'):
-        travel(action)
+
+    # action input
+    action = input('Action: ').lower().split(' ')
+    if len(action) == 1:
+        if action[0] in ('q', 'quit'):
+            print(newline, end='')
+            print(
+                'From the bottom of a heretofore unnoticed well, you hear:\n"Thank you for playing..."')
+            print(newline, end='')
+            sys.exit()
+        elif action[0] in ('n', 's', 'e', 'w'):
+            travel(action[0])
+        elif action[0] in ('i', 'inventory'):
+            print(newline, end='')
+            if len(player.items) == 0:
+                print(
+                    'You have nothing but the potato-sack trousers and soiled tunic \nyou apparently think fit to wear in public.')
+            else:
+                print('In addition to your shoddy clothes, you have:')
+                for i in range(len(player.items)):
+                    print(f'{player.items[i].name}')
+        elif action[0] in ('get', 'take', 'drop', 'leave', 'examine', 'probe'):
+            print(f'{action[0].capitalize()} what, exactly?')
+        else:
+            print(suggestion)
+    elif len(action) == 2:
+        if action[0] in ('get', 'take'):
+            take(action[1])
+        elif action[0] in ('drop', 'leave'):
+            drop(action[1])
+        elif action[0] in ('examine', 'probe'):
+            look(action[1])
+        else:
+            print(suggestion)
     else:
-        print('I don\'t understand what you\'re trying to do. Try n, s, e, or w...')
+        print(suggestion)
