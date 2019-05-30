@@ -11,13 +11,7 @@ rope = Item(
 lamp = Item('lamp', 'It\'s a rusty lamp with less fuel than you\'d like. The lamp\nis functional, however, since it is currently illuminating the room.', True)
 knife = Item(
     'knife', '"What is a knife sharpener?" you imagine the previous\nowner of this knife wondering.', False)
-
-
-# items = {
-#     'rope': Item('rope', 'A dusty old rope, probably about fifty units long'),
-#     'lamp': Item('lamp', 'A rusty lamp with less fuel than you\'d like. The lamp is functional, however, since it is currently illuminating the room.'),
-#     'knife': Item('knife', '"What is a knife sharpener?" you imagine the previous owner of this knife wondering.')
-# }
+spike = Item('spike', 'This looks like a climbing spike, but much larger. Even accounting\nfor its size, it is quite heavy.', False)
 
 # Declare all the rooms
 
@@ -26,11 +20,13 @@ room = {
                      "North of you, the cave mouth beckons", [knife], True),
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty passages run north and east.""", [lamp], True),
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling into the darkness. Ahead to the north, a light flickers in the distance, but there is no way across the chasm.""", [rope], False),
+    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling into the darkness. Ahead to the north, a light flickers in the distance, but there is no way across the chasm. There does seem to be a way down, however.""", [rope], False),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west to north. The smell of gold permeates the air.""", [], False),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure chamber! Sadly, it has already been completely emptied by earlier adventurers. The only exit is to the south.""", [], False),
+
+    'cliffside': Room("Side of a Cliff", """You've managed to shimmy down the side of the cliff, though you're still\nnowhere near the bottom. The crumbling rock makes you want to climb back\nup as soon as possible.""", [spike], False),
 }
 
 
@@ -41,13 +37,15 @@ room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
 room['foyer'].e_to = room['narrow']
 room['overlook'].s_to = room['foyer']
+room['overlook'].d_to = room['cliffside']
+room['cliffside'].u_to = room['overlook']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 # DRY variables
 newline = '\n'
-suggestion = 'Slow down, pardner. Try n, s, e, or w, or simple commands \nlike \'examine filth\', \'take treasure\', or \'drop scorpion\'.'
+suggestion = 'Slow down, pardner. Try n, s, e, w, u, or d, or simple commands \nlike \'examine filth\', \'take treasure\', or \'drop scorpion\'.'
 
 
 #
@@ -90,7 +88,7 @@ while True:
                 'From the bottom of a heretofore unnoticed well, you hear:\n"Thank you for playing..."')
             print(newline, end='')
             sys.exit()
-        elif action[0] in ('n', 's', 'e', 'w'):
+        elif action[0] in ('n', 's', 'e', 'w', 'u', 'd'):
             player.travel(action[0])
         elif action[0] in ('i', 'inventory'):
             print(newline, end='')
