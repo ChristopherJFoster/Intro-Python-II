@@ -14,7 +14,7 @@ item = {
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", [item['rope'], item['knife']]),
+                     "North of you, the cave mouth beckons", [item['rope'], item['knife']]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east.""", [item['lamp']]),
@@ -85,11 +85,17 @@ def travel(direction):
         print(f'There is no path in that direction, {player.name}.')
 
 
-def take(item):
-    if item == 'treasure':
+def take(checkitem):
+    # print(checkitem)
+    # print(current_room.items[0].name)
+    # print(any(current_room.items[i].name for i in range(
+    #     len(current_room.items)) if current_room.items[i].name == checkitem))
+    if checkitem == 'treasure':
         print('There\'s no treasure here. You didn\'t really think it would be that easy, did you?')
+    elif any(current_room.items[i].name for i in range(len(current_room.items)) if current_room.items[i].name == checkitem):
+        print(f'You take the {checkitem}')
     else:
-        print('take item goes here')
+        print(f'There doesn\'t seem to be any {checkitem} here.')
 
 
 def drop(item):
