@@ -44,10 +44,11 @@ class Player:
             print(f'There is no path in that direction, {self.name}.')
 
     def addItem(self, item):
-        self.items.append(item)
-        print(newline, end='')
-        print(f'You take the {item.name}.')
-        print(newline, end='')
+        if item != None:
+            self.items.append(item)
+            print(newline, end='')
+            print(f'You take the {item.name}.')
+            print(newline, end='')
 
     def removeItem(self, item_name):
         for item in self.items:
@@ -55,6 +56,6 @@ class Player:
                 self.items.remove(item)
                 return item
         print(newline, end='')
-        print(f'You don\'t have a {item_name} to drop!')
+        print(f'You can\'t drop something you don\'t have!')
         print(newline, end='')
         return None

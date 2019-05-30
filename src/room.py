@@ -11,10 +11,11 @@ class Room:
         self.items = items
 
     def addItem(self, item):
-        self.items.append(item)
-        print(newline, end='')
-        print(f'You\'ve dropped the {item.name}.')
-        print(newline, end='')
+        if item != None:
+            self.items.append(item)
+            print(newline, end='')
+            print(f'You\'ve dropped the {item.name}.')
+            print(newline, end='')
 
     def removeItem(self, item_name):
         for item in self.items:
