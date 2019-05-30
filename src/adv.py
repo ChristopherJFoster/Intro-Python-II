@@ -8,7 +8,7 @@ from item import Item
 
 rope = Item(
     'rope', 'You see a dusty old rope, probably about fifty units long.', False)
-lamp = Item('lamp', 'You see a rusty lamp with less fuel than you\'d like. The lamp\nis functional, however, since it is currently illuminating the room.', True)
+lamp = Item('lamp', 'It\'s a rusty lamp with less fuel than you\'d like. The lamp\nis functional, however, since it is currently illuminating the room.', True)
 knife = Item(
     'knife', '"What is a knife sharpener?" you imagine the previous\nowner of this knife wondering.', False)
 
@@ -23,10 +23,10 @@ knife = Item(
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mouth beckons", [rope, knife], True),
+                     "North of you, the cave mouth beckons", [knife], True),
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty passages run north and east.""", [lamp], True),
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling into the darkness. Ahead to the north, a light flickers in the distance, but there is no way across the chasm.""", [], False),
+    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling into the darkness. Ahead to the north, a light flickers in the distance, but there is no way across the chasm.""", [rope], False),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west to north. The smell of gold permeates the air.""", [], False),
 
@@ -107,7 +107,7 @@ while True:
             print(newline, end='')
             print(f'{action[0].capitalize()} what, exactly?')
             print(newline, end='')
-        elif action[0] in ('examine', 'look'):
+        elif action[0] in ('examine', 'look', 'l'):
             player.look()
         else:
             print(newline, end='')
@@ -118,7 +118,7 @@ while True:
             player.addItem(player.current_room.removeItem(action[1]))
         elif action[0] in ('drop', 'leave'):
             player.current_room.addItem(player.removeItem(action[1]))
-        elif action[0] in ('examine', 'look'):
+        elif action[0] in ('examine', 'look', 'l'):
             player.look(action[1])
         else:
             print(newline, end='')

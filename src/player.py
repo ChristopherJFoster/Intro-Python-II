@@ -32,10 +32,11 @@ class Player:
                 print(f'{self.current_room.name}')
                 print(f'{self.current_room.desc}')
                 print(newline, end='')
-                print('In this location, you see:')
-                for i in range(len(self.current_room.items)):
-                    print(f'{self.current_room.items[i].name}')
-                print(newline, end='')
+                if len(self.current_room.items) > 0:
+                    print('In this location, you see:')
+                    for i in range(len(self.current_room.items)):
+                        print(f'{self.current_room.items[i].name}')
+                    print(newline, end='')
                 found = True
             if found == False:
                 print(newline, end='')
@@ -44,7 +45,7 @@ class Player:
         else:
             print(newline, end='')
             print(
-                'Egad! It\'s pitch black in here!\nYou might consider going back the way you came.')
+                'Egad! It\'s pitch black in here!\nYou might consider bringing some kind of light next time.')
             print(newline, end='')
 
     def travel(self, direction):
