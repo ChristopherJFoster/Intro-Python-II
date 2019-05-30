@@ -3,7 +3,8 @@ class Item:
         self.name = name
         self.desc = desc
 
-    # def __repr__(self):
-    #     return str(f'{self.name}')
+    def onTake(self):
+        print(f'You take the {self.name}.')
 
-    # __repr__ = __str__
+    def onDrop(self):
+        print(f'You drop the {self.name}.')
