@@ -113,7 +113,13 @@ while True:
             print(newline, end='')
     elif len(action) == 2:
         if action[0] in ('get', 'take'):
-            player.addItem(player.current_room.removeItem(action[1]))
+            if action[1] == 'treasure':
+                print(newline, end='')
+                print(
+                    'There\'s no treasure here. You didn\'t really think it would be that easy, did you?')
+                print(newline, end='')
+            else:
+                player.addItem(player.current_room.removeItem(action[1]))
         elif action[0] in ('drop', 'leave'):
             player.current_room.addItem(player.removeItem(action[1]))
         elif action[0] in ('examine', 'look', 'l'):

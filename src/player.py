@@ -40,7 +40,7 @@ class Player:
                 found = True
             if found == False:
                 print(newline, end='')
-                print(f'There doesn\'t seem to be any {item} here.')
+                print(f'There doesn\'t seem to be any {target} here.')
                 print(newline, end='')
         else:
             print(newline, end='')
